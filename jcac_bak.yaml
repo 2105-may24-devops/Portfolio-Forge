@@ -1,0 +1,265 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          description: "forge pat"
+          id: "gh-pat"
+          password: "{AQAAABAAAAAwKXS2PBG7o+C4q8atNKKYll60O7XJP5H21Ux0Jn5jGqmEXJr5pU4Xfh3Wspmu7hVHlRIkoZmjvjvSidlk5jcWNg==}"
+          scope: GLOBAL
+          username: "nrevs"
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy: "loggedInUsersCanDoAnything"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  globalNodeProperties:
+  - envVars:
+      env:
+      - key: "EMAIL_LIST"
+        value: "nicholas.wagner@revature.net"
+  labelAtoms:
+  - name: "master"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 4
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "admin-id"
+        name: "admin-name"
+        password: "admin-password"
+        properties:
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - mailer:
+            emailAddress: "nicholas.wagner@revature.net"
+        - "apiToken"
+        - favoriting:
+            autofavoriteEnabled: true
+        - "favorite"
+  slaveAgentPort: -1
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: true
+  sSHD:
+    port: -1
+unclassified:
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketCloudEndpoint:
+        enableCache: false
+        manageHooks: false
+        repositoriesCacheDuration: 0
+        teamCacheDuration: 0
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  buildStepOperation:
+    enabled: false
+  email-ext:
+    adminRequiredForTemplateTesting: false
+    allowUnregisteredEnabled: false
+    charset: "UTF-8"
+    debugMode: false
+    defaultBody: |-
+      $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+      Check console output at $BUILD_URL to view the results.
+    defaultContentType: "text/plain"
+    defaultRecipients: ${DEFAULT_EMAIL_RECIPIENTS}
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    defaultTriggerIds:
+    - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+    mailAccount:
+      smtpHost: "${SMTP_HOST}"
+      smtpPassword: "${SMTP_PASSWORD}"
+      smtpPort: "${SMTP_PORT}"
+      smtpUsername: "${SMTP_USERNAME}"
+      useSsl: true
+    maxAttachmentSize: -1
+    maxAttachmentSizeMb: -1
+    precedenceBulk: false
+    watchingEnabled: false
+  fingerprints:
+    fingerprintCleanupDisabled: false
+    storage: "file"
+  ghprbTrigger:
+    autoCloseFailedPullRequests: false
+    cron: "H/5 * * * *"
+    extensions:
+    - ghprbSimpleStatus:
+        addTestResults: false
+        showMatrixStatus: false
+    githubAuth:
+    - credentialsId: "gh-pat"
+      description: "jenkins connection"
+      id: "${GITHUB_AUTH_ID}"
+      secret: "${GITHUB_AUTH_SECRET}"
+      serverAPIUrl: "https://api.github.com"
+    manageWebhooks: false
+    okToTestPhrase: ".*ok\\W+to\\W+test.*"
+    requestForTestingPhrase: "Can one of the admins verify this patch?"
+    retestPhrase: ".*test\\W+this\\W+please.*"
+    skipBuildPhrase: ".*\\[skip\\W+ci\\].*"
+    useComments: false
+    useDetailedComments: false
+    whitelistPhrase: ".*add\\W+to\\W+whitelist.*"
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleForNormalize
+  gitHubPluginConfig:
+    hookUrl: "${GITHUB_HOOK_URL}"
+  gitSCM:
+    addGitTagAction: false
+    allowSecondFetch: false
+    createAccountBasedOnEmail: false
+    disableGitToolChooser: false
+    hideCredentials: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: true
+  githubPullRequests:
+    actualiseOnFactory: false
+  globalConfigFiles:
+    configs:
+    - npm:
+        comment: "user config"
+        content: "; Force npm to always require authentication when accessing the\
+          \ registry, even for GET requests.\n; always-auth = false\n\n; The location\
+          \ of npm's cache directory. See npm-cache (https://docs.npmjs.com/cli/cache)\n\
+          ; Default: Windows: %AppData%\\npm-cache, Posix: ~/.npm\n; cache = \n\n\
+          ; What level of logs to report. On failure, all logs are written to npm-debug.log\
+          \ in the current working directory.\n; Any logs of a higher level than the\
+          \ setting are shown. The default is \"warn\", which shows warn and error\
+          \ output.\n; Default: \"warn\"\n; Values: \"silent\", \"error\", \"warn\"\
+          , \"http\", \"info\", \"verbose\", \"silly\"\n; loglevel = \n\n; The config\
+          \ file to read for global config options.\n; Default: {prefix}/etc/npmrc\n\
+          ; globalconfig = \n\n; The location to install global items. If set on the\
+          \ command line, then it forces non-global commands to run in the specified\
+          \ folder.\n; Default: see npm-folders (https://docs.npmjs.com/files/folders)\n\
+          ; prefix = \n\n; The base URL of the npm package registry.\n; Default: https://registry.npmjs.org/\n\
+          ; registry = \n\n; If set to false, then ignore npm-shrinkwrap.json files\
+          \ when installing.\n; Default: true\n; shrinkwrap ="
+        id: "joe_testing_node"
+        name: "MyNpmrcConfig"
+        providerId: "jenkins.plugins.nodejs.configfiles.NPMConfig"
+  junitTestResultStorage:
+    storage: "file"
+  location:
+    adminAddress: "${ADMIN_EMAIL}"
+    url: "${URL}"
+  mailer:
+    authentication:
+      password: "${SMTP_PASSWORD}"
+      username: "${SMTP_USERNAME}"
+    charset: "UTF-8"
+    defaultSuffix: "${DEFAULT_SUFFIX}"
+    replyToAddress: "${REPLYTO}"
+    smtpHost: "${SMTP_HOST}"
+    smtpPort: "${SMTP_PORT}"
+    useSsl: true
+    useTls: false
+  pollSCM:
+    pollingThreadCount: 10
+  timestamper:
+    allPipelines: false
+    elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+    systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  gradle:
+    installations:
+    - name: "Default"
+      properties:
+      - installSource:
+          installers:
+          - gradleInstaller:
+              id: "7.0.1"
+  mavenGlobalConfig:
+    globalSettingsProvider: "standard"
+    settingsProvider: "standard"
+  nodejs:
+    installations:
+    - name: "nodejs"
+      properties:
+      - installSource:
+          installers:
+          - nodeJSInstaller:
+              id: "14.16.1"
+              npmPackagesRefreshHours: 72
+jobs:
+  - script: >
+      multibranchPipelineJob('Backend') {
+        branchSources {
+          github {
+            id("${GITHUB_AUTH_ID}")
+            scanCredentialsId("${CRED_USERNAME}")
+            repoOwner("${CRED_USERNAME}")
+            repository("${GITHUB_FRONTEND_REPO}")
+          }
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            numToKeep(0)
+          }
+        }
+        triggers {
+          githubPullRequest {
+            useGitHubHooks()
+            githubPush()
+          }
+        }
+      }   
+  - script: >
+      multibranchPipelineJob('Frontend') {
+        branchSources {
+          github {
+            id(${GITHUB_AUTH_ID})
+            scanCredentialsId(${CRED_USERNAME})
+            repoOwner(${CRED_USERNAME})
+            repository(${GITHUB_FRONTEND_REPO})
+          }
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            numToKeep(0)
+          }
+        }
+        triggers {
+          githubPullRequest {
+            useGitHubHooks()
+            githubPush()
+          }
+        }
+      }

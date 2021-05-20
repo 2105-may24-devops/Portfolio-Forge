@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+
+    frontend:
+        build: ./Portfolio-Frontend
+        container_name: pf-frontend
+        ports:
+            - 3000:3000
+    
+    backend:
+        build: ./Forge-Backend
+        container_name: pf-backend
+        ports:
+            - 8081:8081
+#    jenkins:
+#        build: .
+#        container_name: pf-jenkins
+#        ports:
+#            - 8080:8080
