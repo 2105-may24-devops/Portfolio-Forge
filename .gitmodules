@@ -1,0 +1,6 @@
+[submodule "Portfolio-Frontend"]
+	path = Portfolio-Frontend
+	url = https://github.com/javatures/Portfolio-Frontend.git
+[submodule "Forge-Backend"]
+	path = Forge-Backend
+	url = https://github.com/javatures/Forge-Backend.git
