@@ -10,12 +10,17 @@ plugins {
 sourceSets {
     main {
         java {
-            srcDirs("Forge-Backend/src/java")
+            srcDirs("Forge-Backend/src/main/java")
         }
     }
     test {
         java {
             srcDirs("Forge-Backend/src/test/java")
+        }
+    }
+    main {
+        resources {
+            srcDirs("Forge-Backend/src/main/resources")
         }
     }
 }
@@ -42,6 +47,10 @@ node {
 
 ext {
 	set('springCloudVersion', "2020.0.2")
+}
+
+springBoot {
+    mainClassName = 'com.forge.revature.DemoApplication'
 }
 
 dependencies {
@@ -100,11 +109,12 @@ task buildReactApp(type: NodeTask, dependsOn: 'npmInstall') {
     script = project.file('Portfolio-Frontend/node_modules/webpack/bin/webpack.js')
     args = [
             '--mode', 'development',
-            '--entry', './src/App.tsx',
-            '-o', '.Forge-Backend/src/main/resources/static/dist'
+            '--entry', './src/index.tsx',
+            '-o', '../Forge-Backend/src/main/resources/static/dist'
     ]
 }
 
 processResources.dependsOn 'buildReactApp'
-clean.delete << file('node_modules')
+clean.delete << file('Portfolio-Frontend/node_modules')
 clean.delete << file('Forge-Backend/src/main/resources/static/dist')
+
