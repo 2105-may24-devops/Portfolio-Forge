@@ -1,0 +1,110 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'war'
+	id 'jacoco'
+    id "com.github.node-gradle.node" version "3.1.0"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs("Forge-Backend/src/java")
+        }
+    }
+    test {
+        java {
+            srcDirs("Forge-Backend/src/test/java")
+        }
+    }
+}
+
+group = 'com.forge.revature'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+node {
+    nodeModulesDir = file('Portfolio-Frontend')
+    version = '14.16.0'
+    npmWorkDir = file('Portfolio-Frontend')
+}
+
+ext {
+	set('springCloudVersion', "2020.0.2")
+}
+
+dependencies {
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.cloud:spring-cloud-starter'
+	implementation 'org.springframework.session:spring-session-jdbc'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.8
+			}
+		}
+	}
+}
+
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.enabled true
+		csv.enabled true
+		html.enabled true
+	}
+}
+
+task buildReactApp(type: NodeTask, dependsOn: 'npmInstall') {
+    script = project.file('Portfolio-Frontend/node_modules/webpack/bin/webpack.js')
+    args = [
+            '--mode', 'development',
+            '--entry', './src/App.tsx',
+            '-o', '.Forge-Backend/src/main/resources/static/dist'
+    ]
+}
+
+processResources.dependsOn 'buildReactApp'
+clean.delete << file('node_modules')
+clean.delete << file('Forge-Backend/src/main/resources/static/dist')
